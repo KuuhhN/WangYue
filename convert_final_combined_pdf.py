@@ -412,7 +412,7 @@ def convert_md_to_html(md_file):
                         <div class="achievement">部署OpenClaw框架，配置Feishu通道实现双向通信</div>
                         <div class="achievement">集成DeepSeek API，建立代理设置确保网络连通</div>
                         <div class="achievement">安装self‑improving‑agent技能，实现持续自我优化</div>
-                        <div class="achievement">设计三位一体身份架构（Tech & Academic Butler | Hardcore Strength Coach | Ruthless DND DM）</div>
+                        <div class="achievement">设计 Apex 身份架构（科技研发与情报分析助手 ⚡🔬）</div>
                         <div class="achievement">建立自动化任务调度（cron jobs）与心跳机制</div>
                     </div>
                 </div>

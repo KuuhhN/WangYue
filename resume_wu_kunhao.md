@@ -32,7 +32,7 @@
   - 集成 Feishu 通道，建立稳定的双向通信
   - 配置代理设置（HTTP_PROXY/HTTPS_PROXY）确保网络连接正常
   - 安装并集成 self-improving-agent 技能，建立持续自我优化机制
-  - 设计并实现 Agent 的三位一体身份架构（Tech & Academic Butler | Hardcore Strength Coach | Ruthless DND DM）
+  - 设计并实现 Apex 身份架构（科技研发与情报分析助手）
 - **项目成果**：
   - 成功创建可通过 Feishu 控制的本地智能体系统
   - 实现自动化任务调度（cron jobs）与心跳机制

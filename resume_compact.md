@@ -13,7 +13,7 @@
 - 部署OpenClaw框架，配置Feishu通道实现双向通信
 - 集成DeepSeek API，建立代理设置确保网络连通
 - 安装self‑improving‑agent技能，实现持续自我优化
-- 设计三位一体身份架构（Tech & Academic Butler | Hardcore Strength Coach | Ruthless DND DM）
+- 设计 Apex 身份架构（科技研发与情报分析助手）
 - 建立自动化任务调度（cron jobs）与心跳机制，实现完整技能扩展与记忆管理系统
 
 ## 🛠️ 技能专长
