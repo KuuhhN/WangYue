@@ -52,18 +52,15 @@
 
 ---
 
-## 技能清单 (当前 8 个)
+## 技能清单 (当前 3 个)
 
 | 技能 | 版本 | 用途 |
 |------|------|------|
-| gumroad | 1.0.3 | (备用，待清理) |
-| tavily-search | 1.0.0 | AI 优化网络搜索 |
-| self-improving-agent-cn | 1.0.0 | 错误/纠正日志记录 |
-| xiucheng-self-improving-agent | 1.0.0 | 通用对话质量分析 |
-| image-vision | 1.0.0 | 图像分析/OCR |
-| pdf-generation | 1.0.0 | PDF 生成参考 |
-| calendar | 1.0.0 | 日历/日程管理 |
+| xiucheng-self-improving-agent | 1.0.0 | 对话质量分析 / 周报 / SOUL 建议 |
+| self-improving-agent-cn | 1.0.0 | 错误/纠正/最佳实践日志 |
 | ai-conversation-summary | 1.0.0 | 对话内容总结 |
+
+**已清理 (2026-05-13)**: gumroad, tavily-search, image-vision, pdf-generation, calendar (5 个闲置技能)
 
 ---
 
