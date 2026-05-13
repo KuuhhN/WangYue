@@ -1,0 +1,678 @@
+# Web记账应用 - 基础演示
+
+## 项目结构
+```
+web-expense-app/
+├── index.html          # 主页面
+├── style.css          # 样式文件
+├── app.js             # 主要JavaScript逻辑
+├── manifest.json      # PWA配置文件
+└── icons/             # 应用图标
+    ├── icon-192.png
+    └── icon-512.png
+```
+
+## 1. index.html (基础结构)
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的记账本</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <!-- iOS主屏幕图标配置 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部标题栏 -->
+        <header class="app-header">
+            <h1>📊 我的记账本</h1>
+            <div class="balance-display">
+                当前余额: <span id="current-balance">¥0.00</span>
+            </div>
+        </header>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 添加交易表单 -->
+            <section class="add-transaction">
+                <h2>添加记录</h2>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="amount">金额</label>
+                        <input type="number" id="amount" step="0.01" placeholder="0.00" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="type">类型</label>
+                        <select id="type">
+                            <option value="expense">支出</option>
+                            <option value="income">收入</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">分类</label>
+                        <select id="category">
+                            <option value="餐饮">🍔 餐饮</option>
+                            <option value="交通">🚗 交通</option>
+                            <option value="购物">🛍️ 购物</option>
+                            <option value="娱乐">🎮 娱乐</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="note">备注</label>
+                        <input type="text" id="note" placeholder="消费说明">
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">添加记录</button>
+                </form>
+            </section>
+
+            <!-- 交易列表 -->
+            <section class="transaction-list">
+                <h2>近期记录</h2>
+                <div id="transactions-container">
+                    <!-- 交易记录将通过JS动态添加 -->
+                </div>
+            </section>
+
+            <!-- 统计可视化 -->
+            <section class="statistics">
+                <h2>支出统计</h2>
+                <div class="bubble-chart" id="bubble-chart">
+                    <!-- 气泡图将通过Canvas绘制 -->
+                </div>
+                <div class="month-summary">
+                    <p>本月支出: <span id="month-expense">¥0.00</span></p>
+                    <p>本月收入: <span id="month-income">¥0.00</span></p>
+                </div>
+            </section>
+        </main>
+
+        <!-- 底部导航 -->
+        <footer class="app-footer">
+            <nav class="bottom-nav">
+                <button class="nav-btn active" data-page="home">🏠 主页</button>
+                <button class="nav-btn" data-page="add">➕ 记账</button>
+                <button class="nav-btn" data-page="stats">📈 统计</button>
+                <button class="nav-btn" data-page="settings">⚙️ 设置</button>
+            </nav>
+        </footer>
+    </div>
+
+    <!-- JavaScript文件 -->
+    <script src="app.js"></script>
+    
+    <!-- 服务Worker注册 (PWA离线支持) -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker注册成功:', reg.scope))
+                .catch(err => console.log('Service Worker注册失败:', err));
+        }
+    </script>
+</body>
+</html>
+```
+
+## 2. style.css (基础样式)
+```css
+/* 基础重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    line-height: 1.5;
+}
+
+/* 容器布局 */
+.container {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* 头部样式 */
+.app-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.app-header h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.balance-display {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* 主内容区 */
+.main-content {
+    padding: 1rem;
+}
+
+/* 表单样式 */
+.add-transaction {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.add-transaction h2 {
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* 按钮样式 */
+.btn-primary {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* 交易列表样式 */
+.transaction-list {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-amount {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.transaction-amount.expense {
+    color: #ff4757;
+}
+
+.transaction-amount.income {
+    color: #2ed573;
+}
+
+.transaction-category {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.25rem;
+}
+
+/* 气泡图容器 */
+.bubble-chart {
+    height: 200px;
+    border-radius: 12px;
+    background: #f8f9fa;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+/* 底部导航 */
+.app-footer {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    border-top: 1px solid #eee;
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.75rem 0;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #999;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.nav-btn.active {
+    color: #667eea;
+    background-color: rgba(102, 126, 234, 0.1);
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+    .container {
+        max-width: 100%;
+        box-shadow: none;
+    }
+}
+```
+
+## 3. app.js (核心逻辑框架)
+```javascript
+// 数据管理类
+class ExpenseApp {
+    constructor() {
+        this.transactions = this.loadTransactions();
+        this.categories = [
+            { id: 1, name: '餐饮', color: '#FF6B6B', icon: '🍔' },
+            { id: 2, name: '交通', color: '#4ECDC4', icon: '🚗' },
+            { id: 3, name: '购物', color: '#45B7D1', icon: '🛍️' },
+            { id: 4, name: '娱乐', color: '#96CEB4', icon: '🎮' },
+            { id: 5, name: '医疗', color: '#FFEAA7', icon: '🏥' },
+            { id: 6, name: '教育', color: '#DDA0DD', icon: '📚' },
+            { id: 7, name: '其他', color: '#778899', icon: '📦' }
+        ];
+        this.init();
+    }
+
+    // 从LocalStorage加载数据
+    loadTransactions() {
+        const data = localStorage.getItem('expense-transactions');
+        return data ? JSON.parse(data) : [];
+    }
+
+    // 保存数据到LocalStorage
+    saveTransactions() {
+        localStorage.setItem('expense-transactions', JSON.stringify(this.transactions));
+    }
+
+    // 初始化应用
+    init() {
+        this.setupEventListeners();
+        this.renderTransactions();
+        this.updateBalance();
+        this.renderBubbleChart();
+    }
+
+    // 设置事件监听器
+    setupEventListeners() {
+        const form = document.getElementById('transaction-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.addTransaction();
+            });
+        }
+
+        // 底部导航切换
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.switchPage(e.target.dataset.page);
+            });
+        });
+    }
+
+    // 添加交易记录
+    addTransaction() {
+        const amount = parseFloat(document.getElementById('amount').value);
+        const type = document.getElementById('type').value;
+        const category = document.getElementById('category').value;
+        const note = document.getElementById('note').value;
+
+        if (!amount || amount <= 0) {
+            alert('请输入有效的金额');
+            return;
+        }
+
+        const transaction = {
+            id: Date.now(),
+            amount,
+            type,
+            category,
+            note: note || '',
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        this.transactions.unshift(transaction);
+        this.saveTransactions();
+        this.renderTransactions();
+        this.updateBalance();
+        this.renderBubbleChart();
+        
+        // 清空表单
+        document.getElementById('transaction-form').reset();
+        
+        // 显示成功提示
+        this.showToast('记录添加成功!');
+    }
+
+    // 显示交易列表
+    renderTransactions() {
+        const container = document.getElementById('transactions-container');
+        if (!container) return;
+
+        if (this.transactions.length === 0) {
+            container.innerHTML = '<p class="empty-message">暂无记录，开始记账吧！</p>';
+            return;
+        }
+
+        container.innerHTML = this.transactions.slice(0, 10).map(transaction => `
+            <div class="transaction-item">
+                <div class="transaction-info">
+                    <div class="transaction-category">
+                        ${this.getCategoryIcon(transaction.category)} ${transaction.category}
+                    </div>
+                    <div class="transaction-note">${transaction.note || '无备注'}</div>
+                    <div class="transaction-date">${transaction.date}</div>
+                </div>
+                <div class="transaction-amount ${transaction.type}">
+                    ${transaction.type === 'expense' ? '-' : '+'}¥${transaction.amount.toFixed(2)}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // 获取分类图标
+    getCategoryIcon(categoryName) {
+        const category = this.categories.find(c => c.name === categoryName);
+        return category ? category.icon : '📦';
+    }
+
+    // 更新余额显示
+    updateBalance() {
+        const balanceElement = document.getElementById('current-balance');
+        if (!balanceElement) return;
+
+        const totalIncome = this.transactions
+            .filter(t => t.type === 'income')
+            .reduce((sum, t) => sum + t.amount, 0);
+        
+        const totalExpense = this.transactions
+            .filter(t => t.type === 'expense')
+            .reduce((sum, t) => sum + t.amount, 0);
+        
+        const balance = totalIncome - totalExpense;
+        balanceElement.textContent = `¥${balance.toFixed(2)}`;
+        
+        // 更新月度统计
+        this.updateMonthlySummary();
+    }
+
+    // 更新月度统计
+    updateMonthlySummary() {
+        const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM格式
+        
+        const monthExpense = this.transactions
+            .filter(t => t.type === 'expense' && t.date.startsWith(currentMonth))
+            .reduce((sum, t) => sum + t.amount, 0);
+        
+        const monthIncome = this.transactions
+            .filter(t => t.type === 'income' && t.date.startsWith(currentMonth))
+            .reduce((sum, t) => sum + t.amount, 0);
+        
+        const expenseElement = document.getElementById('month-expense');
+        const incomeElement = document.getElementById('month-income');
+        
+        if (expenseElement) expenseElement.textContent = `¥${monthExpense.toFixed(2)}`;
+        if (incomeElement) incomeElement.textContent = `¥${monthIncome.toFixed(2)}`;
+    }
+
+    // 渲染气泡图 (色块大小可视化)
+    renderBubbleChart() {
+        const container = document.getElementById('bubble-chart');
+        if (!container) return;
+
+        // 按分类统计支出
+        const categoryExpenses = {};
+        this.transactions
+            .filter(t => t.type === 'expense')
+            .forEach(t => {
+                categoryExpenses[t.category] = (categoryExpenses[t.category] || 0) + t.amount;
+            });
+
+        // 清空容器
+        container.innerHTML = '';
+
+        // 创建气泡
+        Object.entries(categoryExpenses).forEach(([category, amount]) => {
+            const categoryData = this.categories.find(c => c.name === category);
+            const color = categoryData ? categoryData.color : '#778899';
+            const icon = categoryData ? categoryData.icon : '📦';
+            
+            // 气泡大小基于金额 (最小30px，最大120px)
+            const size = Math.min(120, Math.max(30, Math.sqrt(amount) * 3));
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble-item';
+            bubble.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                background-color: ${color};
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-weight: bold;
+                margin: 5px;
+                position: relative;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            `;
+            
+            bubble.innerHTML = `
+                <div style="font-size: ${size/3}px;">${icon}</div>
+                <div style="position: absolute; bottom: -25px; font-size: 12px; color: #666; white-space: nowrap;">
+                    ${category}<br>¥${amount.toFixed(0)}
+                </div>
+            `;
+            
+            container.appendChild(bubble);
+        });
+    }
+
+    // 切换页面
+    switchPage(page) {
+        // 更新导航按钮状态
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.page === page);
+        });
+
+        // 这里可以添加页面切换逻辑
+        console.log('切换到页面:', page);
+    }
+
+    // 显示提示消息
+    showToast(message) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            z-index: 1000;
+            animation: fadeInOut 2s ease-in-out;
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 2000);
+    }
+}
+
+// 初始化应用
+document.addEventListener('DOMContentLoaded', () => {
+    window.app = new ExpenseApp();
+});
+```
+
+## 4. manifest.json (PWA配置)
+```json
+{
+    "name": "我的记账本",
+    "short_name": "记账本",
+    "description": "个人记账管理应用",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#667eea",
+    "icons": [
+        {
+            "src": "icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
+```
+
+## 5. sw.js (服务Worker - 基础版)
+```javascript
+const CACHE_NAME = 'expense-app-v1';
+const urlsToCache = [
+    './',
+    './index.html',
+    './style.css',
+    './app.js',
+    './manifest.json'
+];
+
+// 安装阶段
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+    );
+});
+
+// 激活阶段
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheName !== CACHE_NAME) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+// 请求拦截
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => response || fetch(event.request))
+    );
+});
+```
+
+## 使用说明
+
+### 开发环境搭建
+1. 在你的Windows笔记本上创建项目文件夹
+2. 将上述文件保存到对应位置
+3. 使用VS Code或其他编辑器打开
+4. 双击`index.html`在浏览器中预览
+
+### 真机测试 (iPhone 14 Pro Max)
+1. 确保笔记本和iPhone在同一WiFi网络
+2. 在VS Code中安装"Live Server"扩展
+3. 右键点击`index.html` → "Open with Live Server"
+4. 在iPhone Safari中访问显示的本地地址 (如: `http://192.168.x.x:5500`)
+5. 点击分享按钮 → "添加到主屏幕"
+
+### 功能扩展建议
+1. **数据导出** - 导出CSV文件
+2. **分类管理** - 添加/编辑/删除分类
+3. **预算设置** - 月度预算提醒
+4. **数据备份** - 导出/导入JSON文件
+5. **主题切换** - 深色/浅色模式
+
+### 学习重点
+- HTML5表单与本地存储
+- CSS响应式设计与动画
+- JavaScript面向对象编程
+- PWA渐进式Web应用技术
+- 数据可视化基础 (Canvas/SVG)
+
+---
+
+**这是完整可运行的基础版本，你可以立即开始修改和扩展功能。**

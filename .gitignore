@@ -1,0 +1,20 @@
+# OpenClaw system files
+.openclaw/credentials/
+.openclaw/mcp.json
+.clawhub/
+
+# Generated artifacts
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+build/
+
+# Generated PDFs & temp files
+*.pdf
+*.base64.txt
+image_base64.txt
+
+# OS
+.DS_Store
+Thumbs.db

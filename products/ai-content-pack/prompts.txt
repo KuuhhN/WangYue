@@ -1,0 +1,50 @@
+# AI Content Creation Prompts (100+)
+
+## Social Media Prompts
+
+### Twitter/X Threads
+1. "Write a 5-tweet thread about [topic] that educates beginners. Include emojis and hashtags."
+2. "Create a viral tweet about [industry trend] with a surprising statistic."
+3. "Draft a tweetstorm comparing [Product A] vs [Product B] for [audience]."
+
+### LinkedIn Posts
+4. "Write a LinkedIn post sharing a lesson learned from [specific experience]. Include a call to action for comments."
+5. "Create a carousel post outline about [topic] with 5 key points and visuals description."
+6. "Draft a thought leadership post about [future trend] in [industry]."
+
+### Instagram Captions
+7. "Write an Instagram caption for a [type of image] that tells a story and asks a question."
+8. "Create 5 different caption options for a product launch post."
+9. "Draft a Reels script about [quick tip] with hooks and CTAs."
+
+## Blog Content Prompts
+
+10. "Write an outline for a 1500-word ultimate guide about [topic] for beginners."
+11. "Create a listicle post '10 Ways to [achieve goal] in [industry]' with actionable tips."
+12. "Draft an opinion piece about [controversial topic] with balanced arguments."
+
+## Video Scripts
+
+13. "Write a 60-second YouTube Shorts script explaining [complex concept] simply."
+14. "Create a video outline for a tutorial about [software feature]."
+15. "Draft a podcast episode intro about [topic] that hooks listeners in 30 seconds."
+
+## Email Marketing
+
+16. "Write a welcome email sequence (3 emails) for [product/service] subscribers."
+17. "Create a promotional email for [product launch] with urgency and scarcity elements."
+18. "Draft a newsletter introduction about [monthly theme]."
+
+## Sales & Copywriting
+
+19. "Write a product description for [product] focusing on benefits not features."
+20. "Create landing page copy for [service] with headline, subheadline, and bullet points."
+21. "Draft a value proposition statement for [brand] targeting [audience]."
+
+## Content Strategy
+
+22. "Generate 20 content ideas for [niche] audience for the next quarter."
+23. "Create a content pillar strategy around [core topic] with 3 subtopics."
+24. "Draft a content repurposing plan for [existing content piece]."
+
+[Additional 80+ prompts included in full version...]
