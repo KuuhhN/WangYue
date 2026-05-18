@@ -1,6 +1,7 @@
 # OpenClaw system files
 .openclaw/credentials/
 .openclaw/mcp.json
+.openclaw/workspace-state.json
 .clawhub/
 
 # Generated artifacts
