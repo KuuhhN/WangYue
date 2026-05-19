@@ -12,36 +12,52 @@ This repository documents the complete lifecycle of deploying, configuring, and 
 
 ## Architecture
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Feishu (User Interface)               │
-└──────────────────────┬──────────────────────────────────┘
-                       │ HTTPS / Webhook
-┌──────────────────────▼──────────────────────────────────┐
-│                    OpenClaw Gateway                      │
-│  ┌────────────────────────────────────────────────────┐ │
-│  │  Agent Core (望月)                                  │ │
-│  │  • DeepSeek V4 Flash (thinking-mode capable)        │ │
-│  │  • Gemini API (web_search grounding)                │ │
-│  │  • Proxy-aware routing (Clash TUN bypass)           │ │
-│  └────────────────────────────────────────────────────┘ │
-│  ┌────────────────────────────────────────────────────┐ │
-│  │  Skills Layer                                       │ │
-│  │  • Self-improving agent (auto quality analysis)     │ │
-│  │  • Conversation summarization                       │ │
-│  │  • Code quality scanning (check_memory.py)          │ │
-│  └────────────────────────────────────────────────────┘ │
-└──────────────────────┬──────────────────────────────────┘
-                       │
-┌──────────────────────▼──────────────────────────────────┐
-│  Infrastructure Layer                                    │
-│  • Windows 11 24H2 (x64)                                 │
-│  • Node.js v24.15.0                                      │
-│  • ClawPanel (GUI management)                            │
-│  • Clash proxy (TUN + system proxy hybrid)               │
-│  • Huorong antivirus (trust-zone configured)             │
-│  • Git version control (this repo)                       │
-└─────────────────────────────────────────────────────────┘
+```mermaid
+graph TD
+    subgraph User["User Layer"]
+        A["You (Feishu Chat)"]
+    end
+
+    subgraph Agent["Agent Core"]
+        B["OpenClaw Gateway"]
+        C["望月 Agent"]
+        D["DeepSeek V4 Flash<br/>(thinking-mode)"]
+        E["Gemini Search<br/>(web_search)"]
+    end
+
+    subgraph Skills["Skills & Extensions"]
+        F["Self-Improving Agent"]
+        G["Conversation Summary"]
+        H["Code Quality Scanner"]
+        I["CLI-Anything Hub<br/>(7 CLI harnesses)"]
+    end
+
+    subgraph Infra["Infrastructure"]
+        J["Windows 11 24H2"]
+        K["Node.js v24.15.0"]
+        L["Clash Proxy"]
+        M["Huorong Antivirus<br/>(trust zone)"]
+        N["Git / GitHub"]
+    end
+
+    A -->|"HTTPS / Webhook"| B
+    B --> C
+    C --> D
+    C --> E
+    C --> F
+    C --> G
+    C --> H
+    C --> I
+    C --> N
+    D -->|"Direct Connect"| K
+    E -->|"Via Proxy"| L
+
+    style A fill:#4285f4,color:#fff
+    style B fill:#34a853,color:#fff
+    style C fill:#ea4335,color:#fff
+    style D fill:#fbbc04,color:#000
+    style E fill:#fbbc04,color:#000
+    style I fill:#8b5cf6,color:#fff
 ```
 
 ---
