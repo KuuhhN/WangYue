@@ -16,6 +16,9 @@ build/
 *.base64.txt
 image_base64.txt
 
+# Personal data (do not push to public repo)
+USER.md
+
 # OS
 .DS_Store
 Thumbs.db
