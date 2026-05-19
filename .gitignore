@@ -19,6 +19,47 @@ image_base64.txt
 # Personal data (do not push to public repo)
 USER.md
 
+# Old artifacts & temp files
+-w
+code_scan_report.txt
+improvement_log.md
+product_preview.md
+promotion_copy.md
+view_image.html
+ios_expense_app_spec.md
+web_expense_app_development_plan.md
+web_expense_app_demo
+
+# Old scripts (deleted from tracking)
+convert_*.py
+debug_doc.py
+fix_report.py
+gen_report.py
+gen_report_v2.py
+replace_body.py
+self_improving_integration.py
+self_improving_run.py
+
+# Old resume files
+resume_*.md
+
+# Old business files
+products/
+fiverr_setup/
+
+# Skill files not part of the core stack
+skills/github_reviewer.py
+
+# Early memory records (pre-cleanup)
+memory/2026-03-07*.md
+memory/2026-03-08.md
+memory/2026-03-11.md
+memory/2026-03-24.md
+memory/2026-03-25.md
+memory/2026-03-26.md
+memory/2026-04-25.md
+memory/2026-05-11.md
+
 # OS
 .DS_Store
 Thumbs.db
