@@ -112,7 +112,7 @@ def main():
     else:
         root_dir = os.path.dirname(os.path.abspath(__file__))
     
-    print(f"🔍 正在扫描目录: {root_dir}")
+    print(f"[SCAN] 正在扫描目录: {root_dir}")
     python_files = find_python_files(root_dir)
     
     if not python_files:
@@ -150,7 +150,7 @@ def main():
     
     # 生成报告
     if all_issues:
-        print("\n⚠️ 发现问题:")
+        print("\n[WARN] 发现问题:")
         for filepath, issues in all_issues:
             print(f"\n{filepath}:")
             for issue in issues:
@@ -167,10 +167,10 @@ def main():
                     f.write(f"  {issue}\n")
                 f.write("\n")
         
-        print(f"\n📄 详细报告已保存到: {report_file}")
+        print(f"\n[FILE] 详细报告已保存到: {report_file}")
         return len(all_issues)
     else:
-        print("\n✅ 未发现明显问题")
+        print("\n[OK] 未发现明显问题")
         return 0
 
 if __name__ == "__main__":
@@ -178,6 +178,6 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except Exception as e:
-        print(f"❌ 脚本执行出错: {e}")
+        print(f"[ERROR] 脚本执行出错: {e}")
         traceback.print_exc()
         sys.exit(1)
