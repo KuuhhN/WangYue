@@ -1,0 +1,47 @@
+﻿{
+    "summary":  "Severity: RED | Alerts: 5 | Trajectory: 10MB | Node: 1 | Logs: 1.5MB",
+    "suggestions":  [
+                        "[ARCHIVE] Archive: fdd10126-0153-475d-b017-cee578e20423.trajectory.jsonl, e9474a36-d749-417b-ab53-e63acecf0699.trajectory.jsonl",
+                        "[FIX] Run openclaw doctor --fix"
+                    ],
+    "timestamp":  "2026-05-24T11:52:37+08:00",
+    "alerts":  [
+                   "[WARN] model-resolution \u003e10s (12 times)",
+                   "[WARN] Event loop delay \u003e5s (22 times)",
+                   "[WARN] Frequent WS disconnects (21 times)",
+                   "[WARN] Large trajectory: 2 files \u003e500KB (total 10MB)",
+                   "[ERR] Config parse failed: 传入的对象无效，应为“:”或“}”。 (766): {\n  \"agents\": {\n    \"defaults\": {\n      \"model\": {\n        \"fallbacks\": [\n"
+               ],
+    "checks":  {
+                   "logDirSizeMB":  1.45,
+                   "modelResolutionSlow":  {
+                                               "count":  12,
+                                               "latest":  "2026-05-24T11:52:29.460+08:00 [agent/embedded] [trace:embedded-run] startup stages: runId=9965d5c2-41fe-4a16-b5c2-b7ee77b978f1 sessionId=9965d5c2-41fe-4a16-b5c2-b7ee77b978f1 phase=attempt-dispatch totalMs=29348 stages=workspace:1ms@1ms,runtime-plugins:30ms@31ms,hooks:0ms@31ms,model-resolution:13057ms@13088ms,auth:13652ms@26740ms,context-engine:0ms@26740ms,attempt-dispatch:2608ms@29348ms"
+                                           },
+                   "nodeProcesses":  {
+                                         "count":  1
+                                     },
+                   "wsDisconnects":  {
+                                         "count":  21
+                                     },
+                   "sessions":  {
+                                    "trajectoryCount":  35,
+                                    "largeFiles":  [
+                                                       "fdd10126-0153-475d-b017-cee578e20423.trajectory.jsonl",
+                                                       "e9474a36-d749-417b-ab53-e63acecf0699.trajectory.jsonl"
+                                                   ],
+                                    "totalTrajectorySizeMB":  10,
+                                    "staleResetCount":  3
+                                },
+                   "configInvalidKeys":  {
+                                             "count":  0
+                                         },
+                   "stuckSessions":  {
+                                         "count":  0
+                                     },
+                   "eventLoopSlow":  {
+                                         "count":  22,
+                                         "latest":  "2026-05-22T13:03:39.841+08:00 [diagnostic] liveness warning: reasons=event_loop_delay interval=30s eventLoopDelayP99Ms=33.5 eventLoopDelayMaxMs=5180 eventLoopUtilization=0.349 cpuCoreRatio=0.348 active=1 waiting=0 queued=1 phase=channels.feishu.start-account recentPhases=sidecars.restart-sentinel:1ms,sidecars.subagent-recovery:14ms,sidecars.main-session-recovery:10ms,post-attach.update-sentinel:0ms,sidecars.session-locks:23653ms,post-ready.maintenance:10ms work=[active=agent:main:main(processing/model_call,q=1,age=153s last=model_call:started) queued=agent:main:main(processing/model_call,q=1,age=153s last=model_call:started)]"
+                                     }
+               }
+}
