@@ -1,8 +1,25 @@
-# OpenClaw system files
-.openclaw/credentials/
-.openclaw/mcp.json
-.openclaw/workspace-state.json
-.clawhub/
+﻿# OpenClaw system files (kept locally, not for public repo)
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+MEMORY.md
+SOUL.md
+TOOLS.md
+USER.md
+
+# System scripts (internal)
+check_memory.py
+healthcheck.ps1
+tmp_*.json
+
+# ClawHub skills (too large and not interview-relevant)
+skills/
+
+# Daily logs (distilled into devlog/)
+memory/
+
+# Draft articles (published version lives elsewhere)
+article-openclaw-deployment-guide.md
 
 # Generated artifacts
 *.pyc
@@ -16,21 +33,15 @@ build/
 *.base64.txt
 image_base64.txt
 
-# Personal data (do not push to public repo)
-USER.md
-
-# Old artifacts & temp files
--w
+# Old artifacts
 code_scan_report.txt
 improvement_log.md
 product_preview.md
 promotion_copy.md
 view_image.html
-ios_expense_app_spec.md
-web_expense_app_development_plan.md
-web_expense_app_demo
+-w
 
-# Old scripts (deleted from tracking)
+# Old scripts
 convert_*.py
 debug_doc.py
 fix_report.py
@@ -46,19 +57,6 @@ resume_*.md
 # Old business files
 products/
 fiverr_setup/
-
-# Skill files not part of the core stack
-skills/github_reviewer.py
-
-# Early memory records (pre-cleanup)
-memory/2026-03-07*.md
-memory/2026-03-08.md
-memory/2026-03-11.md
-memory/2026-03-24.md
-memory/2026-03-25.md
-memory/2026-03-26.md
-memory/2026-04-25.md
-memory/2026-05-11.md
 
 # OS
 .DS_Store
