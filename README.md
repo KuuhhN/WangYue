@@ -52,4 +52,5 @@
 ## 📬 联系方式
 
 - GitHub: [KuuhhN](https://github.com/KuuhhN)
-- （更多方式待补充）
+- QQ: 1801244549
+- 微信: kuhn1173
