@@ -101,7 +101,7 @@ C:\Users\你的用户名\.openclaw\agents\main\sessions\
 
 **完整教程**：一键启动套餐包括（全部截图 + 配置文件 + 排障手册 + 后续更新）
 
-👉 **[点击获取完整教程]**
+👉 **[点击获取完整教程](https://ifdian.net/a/kuhn258?tab=home)** — 爱发电
 
 ---
 
