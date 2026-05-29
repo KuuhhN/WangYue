@@ -1,99 +1,112 @@
-# 🤖 一个能帮你干活的 AI 助手
+# WangYue — OpenClaw AI Agent: Local Deployment & Systems Engineering
 
-> **改实验报告格式、写简单代码、整理磁盘、管本地资料**
-> **装一次，天天用**
+> **A production-grade personal AI agent deployed on Windows 11, engineered through real debugging of 5-layer stack issues.**
 
----
+## About This Project
 
-## 它能帮你做什么？
+This repository documents the complete lifecycle of deploying, configuring, and operating **WangYue (望月)**, an OpenClaw-based AI agent running locally on Windows. The agent serves as a tech R&D assistant with deep thinking (DeepSeek V4 Flash), web search (Gemini API), autonomous scheduling (cron), and long-term memory.
 
-### 🎯 场景一：实验报告格式一键调
-
-老师要求：宋体小四、1.5 倍行距、一级标题黑体三号、参考文献格式……
-你写完了内容，但要一个个调格式？**交给它，秒搞定。**
-
-```
-你：帮我把这篇报告调成学校的标准格式
-它：好了，已经保存到桌面
-```
-
-### 🎯 场景二：代码作业不求人
-
-C 语言排序、Python 爬虫、SQL 查询——计算机课上的简单作业，直接把需求扔给它。
-
-```
-你：写一个 Python 脚本，读取 Excel 里的学生成绩，算出总分和排名
-它：好了，代码在桌面上
-```
-
-### 🎯 场景三：本地资料随手查
-
-论文、课件、读书笔记散落一地？告诉它你要找什么，它去翻。
-
-```
-你：帮我找上学期数据结构那门课的期末复习资料
-它：在这里，需要我把重点整理出来吗？
-```
-
-### 🎯 场景四：磁盘自动清理
-
-C 盘又红了？不用自己翻 Temp 文件夹。
-
-```
-你：C 盘空间不够了
-它：已清理临时文件、缓存和重复项，回收了 2.8 GB
-```
-
-### 🎯 场景五：每天自动推送新闻
-
-```
-每天早上打开电脑 → 今日 AI 圈发生了什么，它已经帮你整理好了。
-```
+**Stack**: OpenClaw v2026.5.7 · DeepSeek V4 Flash · Gemini API · Node.js v24 · Windows 11 · Feishu/WebChat
 
 ---
 
-## 它跟豆包/ChatGPT 网页版有什么不一样？
+## Key Engineering Achievements
+
+### 1. Triple-Layer Network Optimization (`60s → 6ms`)
+
+Diagnosed and resolved a cascading network bottleneck affecting API connectivity:
+
+| Layer | Problem | Fix | Impact |
+|-------|---------|-----|--------|
+| DNS | Default resolver took 11.4s per request | Switched to Alibaba (223.5.5.5) + Cloudflare (1.1.1.1) | **11.4s → 16ms** |
+| Proxy | Clash TUN mode routed DeepSeek traffic overseas | Switched to system-proxy-only | Eliminated routing detour |
+| Runtime | Node.js `undici` ignored uppercase `NO_PROXY` env | Changed to lowercase `no_proxy` | Silent 60s timeout resolved |
+
+**Result**: model-resolution/auth latency from **30–65s down to 0–6ms**.
+
+### 2. Multi-Layer Startup Crash Diagnosis
+
+Resolved three independent failure modes blocking Gateway startup:
+
+- **Network layer**: WebSocket handshake failed — `tauri.localhost` missing from allowedOrigins policy
+- **System layer**: Antivirus (Huorong) real-time scanning caused **93s I/O blocking** at startup → added to trust zone (93s → 26s)
+- **Compute layer**: Sessions JSONL file corruption caused **148s Event Loop stall** during deserialization → isolated and rebuilt sessions directory, **zero data loss**
+
+### 3. Model Architecture Migration
+
+Proactively migrated from a two-tier routing design (V4 Flash + R1 sub-agent) to a single-model architecture when DeepSeek V4 Flash was discovered to natively support `thinking` mode with `reasoning_effort`, eliminating an entire redundant agent layer ahead of the R1 deprecation deadline (2026-07-24).
+
+### 4. Systems Automation
+
+Designed and deployed 5 autonomous cron jobs:
+- AI news digest (daily 12:00)
+- Git auto-backup (daily 12:00)
+- System health self-check (daily 20:00)
+- Memory distillation (daily 03:00)
+- Session cache auto-cleanup (weekly)
+
+---
+
+## Architecture
 
 ```
-            豆包/ChatGPT             这个 AI 助手
-━━━━━━━━━━━━━━━━━━━            ━━━━━━━━━━━━━━━━━━━
-用完就忘                         记住你是谁
-你要手动复制粘贴结果              它直接帮你操作电脑
-不能管你的本地文件                它能翻你电脑里的资料
-不能定时                         能每天自动干活
-每月交会员费                      基础费用一月几块钱
+User Layer (Feishu / WebChat)
+    ↓ HTTPS
+OpenClaw Gateway
+    ↓
+WangYue Agent
+    ├── DeepSeek V4 Flash (thinking-mode) ← Direct connect (no proxy)
+    ├── Gemini API (web_search) ← Via system proxy
+    ├── Skills: Self-Improving / Summary / Code Scanner / CLI Harness
+    └── Git / GitHub (auto-backup)
+        ↓
+Infrastructure: Windows 11 · Node.js v24 · Clash Proxy · Huorong (trusted)
 ```
 
 ---
 
-## 它是怎么做到的？
+## Repository Structure
 
-底层跑的是 **OpenClaw** 这个开源项目 + **DeepSeek** 的 AI 模型。
-
-但你不关心这些。你只需要知道两件事：
-
-1. **装一次**在你的 Windows 电脑上
-2. **告诉它你要什么**，它去干
-
-就像你不需要知道手机信号怎么传输的，你只需要知道它能打电话。
-
----
-
-## 谁适合装？
-
-✅ **经常写实验报告的大学生** — 这是最大的刚需
-✅ **学计算机但不想自己写每行代码的人** — 作业交给它
-✅ **电脑里一堆资料找不到的人** — 它帮你管理
-✅ **C 盘常年飘红的人** — 自动清理
+```
+├── AGENTS.md       # Agent behavior & operational protocols
+├── SOUL.md         # Core identity & decision logic
+├── IDENTITY.md     # System specification
+├── HEARTBEAT.md    # Cron scheduling & autonomous protocol
+├── MEMORY.md       # Distilled engineering chronicle
+├── TOOLS.md        # Tool configurations
+├── memory/         # Operational logs with troubleshooting records
+│   ├── 2026-05-13.md              # Identity restructuring + upgrade crisis
+│   ├── 2026-05-15-troubleshooting.md  # DNS + Proxy + Runtime debugging
+│   ├── 2026-05-17.md              # Startup crash triple-layer fix
+│   └── ...
+└── scripts/        # Automation scripts (session cleanup, backup)
+```
 
 ---
 
-## 怎么开始？
+## Lessons Learned
 
-完整图文教程 + 配置文件 + 排障手册，包你从零到用起来。
-
-👉 **[点击查看教程](https://ifdian.net/a/kuhn258?tab=home)** — 爱发电
+1. **Always verify model capabilities before designing architecture** — DeepSeek V4 Flash absorbed thinking mode natively, making the independent R1 layer unnecessary
+2. **Three-layer debugging methodology**: Network → System → Compute. Isolate each layer before making changes.
+3. **Session cache is disposable** — `workspace/*` (identity, memory, config) is permanent; `sessions/*` can be safely rebuilt
+4. **Windows + Node.js needs antivirus trust zones** for acceptable startup I/O performance
+5. **Environment variables are case-sensitive** in Node.js `undici` — `no_proxy` ≠ `NO_PROXY`
 
 ---
 
-*作者：KuuhhN · 一个软件工程大学生 · 用 AI 解决过最多实际问题的普通人*
+## Tech Stack
+
+| Layer | Choice |
+|-------|--------|
+| AI Model | DeepSeek V4 Flash |
+| Agent Framework | OpenClaw v2026.5.7 |
+| Search | Gemini API (Google Grounding) |
+| Runtime | Node.js v24.15.0 |
+| OS | Windows 11 24H2 (x64) |
+| Proxy | Clash (system-proxy mode only) |
+| Automation | Git + cron (5 tasks) |
+| Channel | Feishu / WebChat |
+
+---
+
+*Built by [KuuhhN](https://github.com/KuuhhN)*
