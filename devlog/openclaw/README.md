@@ -1,52 +1,50 @@
-# OpenClaw Deployment Chronicle
+# OpenClaw 部署排障时间线
 
-> A timeline of building and debugging a personal AI agent on Windows.
+> 在 Windows 上搭建个人 AI 智能体的完整过程。
 
-## 2026-03 — First Deployment
+## 2026年3月 — 首次部署
 
-Initial attempt to run OpenClaw on Windows 11. Basic setup completed, but significant stability issues remained.
+尝试在 Windows 11 上运行 OpenClaw。基本搭建完成，但存在严重稳定性问题。
 
-## 2026-05-13 — Gateway Upgrade Crisis
+## 2026年5月13日 — 升级连环坑
 
-Upgraded OpenClaw from v2026.3.2 to v2026.5.7. Hit **5 cascading failures**:
+从 v2026.3.2 升级到 v2026.5.7，连续触发 **5 个故障**：
 
-| Problem | Root Cause | Solution |
-|---------|-----------|----------|
-| Zombie Node processes blocking port | Previous manual launch left orphan processes | `taskkill /F /IM node.exe` |
-| Node.js version mismatch | PATH pointing to old Node v22.13.0 | Physically removed old dir, reinstalled v24 |
-| CLI command broken | Global npm symlinks broke | `npm install -g openclaw` |
-| Panel isolation auto-destruction | Panel renamed executable to `.bak` | Re-ran global install |
-| API connection timeout | Proxy interference with DeepSeek | Cleared proxy; DeepSeek must connect directly |
+| 故障 | 根因 | 解法 |
+|------|------|------|
+| 端口被僵尸进程占用 | 之前手动启动残留的孤儿进程 | `taskkill /F /IM node.exe` |
+| Node.js 版本不对 | PATH 指向旧版 v22.13.0 | 物理删除旧目录，重装 v24 |
+| CLI 命令失效 | 换引擎后全局 npm 链接断裂 | `npm install -g openclaw` |
+| 面板安全机制误杀 | 面板把启动文件改名 .bak | 重新全局安装 |
+| API 超时 | 代理干扰 DeepSeek | 清除代理设置，强制直连 |
 
-## 2026-05-15 — Network Stack Debugging
+## 2026年5月15日 — 网络栈三层排障
 
-Diagnosed and fixed a triple-layer network bottleneck:
-- **DNS**: 11.4s resolution → switched to Alibaba + Cloudflare (16ms)
-- **Proxy**: Clash TUN mode routing traffic overseas → switched to system-proxy-only
-- **Runtime**: uppercase `NO_PROXY` silently ignored by Node.js undici → lowercase fix
+- **DNS**：11.4 秒解析 → 换阿里云+Cloudflare（16ms）
+- **代理**：Clash TUN 模式绕路 → 改用系统代理
+- **运行时**：大写 NO_PROXY 被 Node.js 静默忽略 → 小写修复
 
-**Result**: API latency 65s → 6ms.
+**结果**：API 延迟 65 秒 → 6 毫秒。
 
-## 2026-05-17 — Startup Crash Diagnosis
+## 2026年5月17日 — 启动崩溃排查
 
-Three independent failure modes blocking Gateway startup:
-- Cross-origin WebSocket rejection
-- Antivirus I/O blocking (93s startup penalty)
-- Corrupted session files causing 148s Event Loop stall
+- 跨域 WebSocket 被拒
+- 杀毒软件 I/O 阻塞（启动慢 93 秒）
+- Session 文件损坏导致 Event Loop 卡死 148 秒
 
-**Result**: Startup 93s → 26s. Zero data loss.
+**结果**：启动 93 秒 → 26 秒。零数据丢失。
 
-## 2026-05-19 — Model Architecture Migration
+## 2026年5月19日 — 模型架构迁移
 
-- Old: V4 Flash (daily) + R1 sub-agent (deep thinking)
-- Discovered V4 Flash natively supports thinking mode
-- Migrated to single-model architecture
-- R1 deprecated 2026-07-24 — migration was done proactively
+- 旧：V4 Flash（日常）+ R1 子 agent（深度思考）
+- 发现 V4 Flash 原生支持 thinking 模式
+- 合并为单模型架构
+- R1 将于 2026-07-24 废弃——主动提前迁移
 
-## 2026-05-21 — Systems Automation
+## 2026年5月21日 — 自动化部署
 
-Deployed 5 cron tasks and session cache auto-cleanup.
+5 个定时任务 + Session 缓存自动清理上线。
 
-## 2026-05-29 — Full System Restoration
+## 2026年5月29日 — 全线恢复
 
-Fixed all cron jobs (targeting current session), cleaned disk (+2.8GB reclaimed), archived large trajectory files (20MB → 8.6MB).
+修复所有 cron 任务、清理磁盘 +2.8GB、归档大轨迹文件。

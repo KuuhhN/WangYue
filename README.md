@@ -1,55 +1,55 @@
-# 🎮 KuuhhN — Software Engineering Student · Indie Game Developer
+# 🎮 KuuhhN — 软件工程学生 · 独立游戏开发者
 
-> **I build things. AI agents that work, games that feel good, and systems that don't break.**
-
----
-
-## 📂 Projects
-
-### 🤖 Project 1: [WangYue — OpenClaw AI Agent](./project-openclaw/)
-
-A production-grade personal AI research assistant deployed on Windows 11 via the OpenClaw framework.
-
-**Key achievements:**
-- Independently deployed and debugged a full AI agent stack on Windows (Node.js, DeepSeek API, Gemini API, Feishu integration)
-- Optimized API latency: **65s → 6ms** through DNS tuning + proxy routing + runtime environment variable debugging
-- Resolved 3-layer startup crash (cross-origin → antivirus I/O → session file corruption)
-- Proactively migrated model architecture ahead of deprecation deadline
-- Built 5 automated cron jobs for news, backup, health check, and maintenance
-
-> [View project →](./project-openclaw/)
-
-### 🕹️ Project 2: [Untitled Indie Game (WIP)](./project-game/)
-
-Currently developing a small indie game from concept to release. Following a Game Jam-style 21-day development cycle.
-
-**Status:** Design phase — exploring core mechanics and visual style
-**Engine:** Godot 4.x (C# / GDScript)
-**Goal:** A complete, polished, playable experience made by one person in a defined timeframe
-
-> [View project →](./project-game/)
+> **我做的东西：能跑起来的 AI 智能体、手感舒服的游戏、不崩的系统。**
 
 ---
 
-## 📝 Devlog
+## 📂 项目一览
 
-I keep a running devlog for both projects. Each entry documents what I built, broke, fixed, and learned.
+### 🤖 项目一：[望月 — OpenClaw AI Agent 本地部署](./project-openclaw/)
 
-- [OpenClaw deployment chronicle](./devlog/openclaw/)
-- [Game development log](./devlog/game/)
+在 Windows 上独立部署 OpenClaw AI Agent，从零到稳定运行的全过程。
+
+**关键成果：**
+- 完整部署并调试了 AI Agent 全栈（Node.js + DeepSeek API + Gemini + 飞书集成）
+- 三层网络优化：API 延迟 **从 65 秒降到 6 毫秒**
+- 解决 Gateway 启动崩溃（跨域 → 杀毒软件 → 会话文件膨胀，三层排查）
+- 模型架构主动迁移：赶在 R1 废弃期限前合并为单模型
+- 搭建 5 个自动定时任务（新闻/备份/健康检查/蒸馏/清理）
+
+> [查看项目详情 →](./project-openclaw/)
+
+### 🕹️ 项目二：[独立游戏（开发中）](./project-game/)
+
+正在用 Godot 4.x 从零开发一款小型独立游戏。
+
+**状态：** 设计阶段 — 确定核心玩法和美术风格
+**引擎：** Godot 4.x（GDScript）
+**目标：** 在一个限定时间内完成一款完整的、可玩的游戏
+
+> [查看项目详情 →](./project-game/)
 
 ---
 
-## 👤 About Me
+## 📝 开发日志
 
-- Software Engineering student, graduating soon
-- Strong sense for what makes a game fun (thousands of games played across every genre)
-- Self-taught in systems engineering, debugging, and AI tooling
-- Looking for internship opportunities in **software engineering, AI engineering, or game development**
+两个项目都有同步更新的开发日志，记录每天做了什么、修了什么、学了什么。
+
+- [OpenClaw 部署排障时间线](./devlog/openclaw/)
+- [独立游戏开发日志](./devlog/game/)
 
 ---
 
-## 📬 Contact
+## 👤 关于我
+
+- 软件工程专业，即将实习
+- 玩过上千款游戏，对「好不好玩」有敏锐判断
+- 自学系统排障、AI 工具链、自动化运维
+- 正在找 **软件工程 / AI 工程 / 游戏开发** 方向的实习
+
+---
+
+## 📬 联系方式
 
 - GitHub: [KuuhhN](https://github.com/KuuhhN)
-- (More channels TBD)
+- （更多方式待补充）

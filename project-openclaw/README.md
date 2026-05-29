@@ -1,49 +1,49 @@
-# WangYue — OpenClaw AI Agent: Local Deployment & Systems Engineering
+# 望月 — OpenClaw AI Agent 本地部署实战
 
-> **A production-grade personal AI agent deployed on Windows 11, engineered through real debugging of 5-layer stack issues.**
+> **在 Windows 上从零部署 OpenClaw AI 智能体，踩过的坑和修好的 bug 全记录。**
 
-## Stack
+## 技术栈
 
-OpenClaw v2026.5.7 · DeepSeek V4 Flash · Gemini API · Node.js v24 · Windows 11 · Feishu/WebChat
+OpenClaw v2026.5.7 · DeepSeek V4 Flash · Gemini API · Node.js v24 · Windows 11 · 飞书 / WebChat
 
-## Key Engineering Achievements
+## 核心排障案例
 
-### 1. Triple-Layer Network Optimization (`65s → 6ms`)
+### 1. 三层网络优化（`65 秒 → 6 毫秒`）
 
-| Layer | Problem | Fix | Impact |
-|-------|---------|-----|--------|
-| DNS | Default resolver took 11.4s per request | Switched to Alibaba (223.5.5.5) + Cloudflare (1.1.1.1) | **11.4s → 16ms** |
-| Proxy | Clash TUN mode routed DeepSeek traffic overseas | Switched to system-proxy-only | Eliminated routing detour |
-| Runtime | Node.js `undici` ignored uppercase `NO_PROXY` | Changed to lowercase `no_proxy` | Silent 60s timeout resolved |
+| 层级 | 问题 | 修复 | 效果 |
+|------|------|------|------|
+| DNS | 默认解析耗时 11.4 秒 | 改用阿里云 (223.5.5.5) + Cloudflare (1.1.1.1) | **11.4s → 16ms** |
+| 代理 | Clash TUN 模式将 DeepSeek 流量绕道海外 | 改用系统代理模式 | 消除路由绕行 |
+| 运行时 | Node.js undici 忽略大写 `NO_PROXY` | 改为小写 `no_proxy` | 静默超时 60s 解决 |
 
-### 2. Multi-Layer Startup Crash Diagnosis
+### 2. Gateway 启动崩溃三层排查
 
-- **Network**: WebSocket handshake failed — `tauri.localhost` missing from allowedOrigins policy
-- **System**: Antivirus (Huorong) real-time scanning caused **93s I/O blocking** → trust zone fix (93s → 26s)
-- **Compute**: Sessions JSONL file corruption caused **148s Event Loop stall** → isolated sessions, rebuilt fresh, **zero data loss**
+- **网络层**：WebSocket 握手失败 — `tauri.localhost` 不在 allowedOrigins 白名单
+- **系统层**：火绒杀毒实时扫描导致启动 I/O 阻塞 **93 秒** → 加入信任区后 **26 秒**
+- **算力层**：Session 轨迹文件损坏导致 Event Loop 卡死 **148 秒** → 隔离 sessions 目录，零数据丢失重建
 
-### 3. Model Architecture Migration
+### 3. 模型架构迁移
 
-Proactively migrated from two-tier routing (V4 Flash + R1 sub-agent) to single-model architecture when V4 Flash was found to natively support `thinking` mode — ahead of R1's deprecation deadline (2026-07-24).
+从双模型路由（V4 Flash 日常 + R1 深度思考）合并为单模型架构。发现 V4 Flash 原生支持 thinking 模式后主动迁移，赶在 R1 废弃期限（2026-07-24）之前完成。
 
-### 4. Systems Automation
+### 4. 自动化运维
 
-5 autonomous cron jobs: AI news digest, Git auto-backup, system health check, memory distillation, session cache cleanup.
+部署了 5 个定时任务：AI 新闻日报、Git 自动备份、系统健康检查、记忆蒸馏、Session 缓存清理。
 
-## Architecture
+## 架构图
 
 ```
-User (Feishu / WebChat) → OpenClaw Gateway → Agent Core
-  ├── DeepSeek V4 Flash (thinking-mode, direct connect)
-  ├── Gemini API (web_search, via system proxy)
-  ├── Skills: Self-Improving / Summary / Code Scanner
-  └── Git auto-backup
+用户（飞书 / WebChat）→ OpenClaw Gateway → Agent 核心
+  ├── DeepSeek V4 Flash（思维链模式，直连）
+  ├── Gemini API（网络搜索，走系统代理）
+  ├── 技能模块：自我改进 / 对话总结 / 代码扫描
+  └── Git 自动备份
 ```
 
-## Lessons Learned
+## 排障方法总结
 
-1. **Always verify model capabilities** — V4 Flash absorbed thinking mode natively, making a separate R1 layer unnecessary
-2. **DeepSeek API must connect directly** — any proxy interferes with stability
-3. **Session cache is disposable** — `workspace/` is permanent; `sessions/` can be safely rebuilt
-4. **Windows + Node.js needs antivirus trust zones** for acceptable startup I/O
-5. **Three-layer debugging methodology**: Network → System → Compute
+1. **确认模型能力再设计架构** — V4 Flash 原生支持思维链，不需要额外 R1 层
+2. **DeepSeek API 必须直连** — 任何代理都会影响稳定性
+3. **Session 缓存可丢弃** — `workspace/` 是永久数据，`sessions/` 可安全重建
+4. **Windows + Node.js 需要杀毒信任区** — 否则启动 I/O 会拖慢数倍
+5. **三层排查方法论**：先网络层 → 再系统层 → 最后算力层
