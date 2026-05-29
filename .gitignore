@@ -61,3 +61,8 @@ fiverr_setup/
 # OS
 .DS_Store
 Thumbs.db
+
+# Secret and local config
+.openclaw/
+.clawhub/
+.github/
