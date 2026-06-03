@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3 uid="uid://ssyyb7mqrqdb"]
+
+[ext_resource type="Script" path="res://scenes/items/SearchableContainer.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dmymx"]
+size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ycpkb"]
+size = Vector2(60, 60)
+
+[node name="SearchableContainer" type="StaticBody2D"]
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dmymx")
+position = Vector2(0, 0)
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(0.8, 0.6, 0.2, 1)
+
+[node name="Lid" type="ColorRect" parent="Visual"]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 4.0
+color = Color(0.5, 0.4, 0.2, 1)
+
+[node name="SearchedIndicator" type="ColorRect" parent="Visual"]
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+color = Color(0.8, 0.8, 0.3, 1)
+visible = false
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+monitorable = true
+
+[node name="InteractionShape" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_ycpkb")
+position = Vector2(0, 0)
+
+[node name="RangeIndicator" type="ColorRect" parent="InteractionArea"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+color = Color(1, 1, 0, 0.15)

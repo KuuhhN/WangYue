@@ -1,0 +1,89 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Zombie Shelter"
+config/description="丧尸末世搜打撤生存游戏"
+run/main_scene="res://scenes/main/Main.tscn"
+config/features=PackedStringArray("4.6")
+config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*res://scripts/core/GameManager.gd"
+ResMgr="*res://scripts/shelter/ResourceManager.gd"
+
+[debug]
+
+gdscript/warnings/inferred_type_variant=1
+
+[input]
+
+move_up={
+"deadzone": 0.5,
+"events": [{
+"keycode": 87,
+"type": "key"
+}]
+}
+move_down={
+"deadzone": 0.5,
+"events": [{
+"keycode": 83,
+"type": "key"
+}]
+}
+move_left={
+"deadzone": 0.5,
+"events": [{
+"keycode": 65,
+"type": "key"
+}]
+}
+move_right={
+"deadzone": 0.5,
+"events": [{
+"keycode": 68,
+"type": "key"
+}]
+}
+run={
+"deadzone": 0.5,
+"events": [{
+"keycode": 4194325,
+"type": "key"
+}]
+}
+crouch={
+"deadzone": 0.5,
+"events": [{
+"keycode": 4194322,
+"type": "key"
+}]
+}
+interact={
+"deadzone": 0.5,
+"events": [{
+"keycode": 70,
+"type": "key"
+}]
+}
+melee_attack={
+"deadzone": 0.5,
+"events": [{
+"button_index": 1,
+"type": "mousebutton"
+}]
+}
+
+[rendering]
+
+renderer/name="vulkan"

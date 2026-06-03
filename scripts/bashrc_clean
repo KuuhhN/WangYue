@@ -1,0 +1,29 @@
+# ~/.bashrc - clean config
+
+# PATH
+export PATH=$HOME/.npm-global/bin:$PATH
+
+# Claude Code + DeepSeek
+export ANTHROPIC_BASE_URL=https://api.deepseek.com/anthropic
+export ANTHROPIC_AUTH_TOKEN=sk-184b8d9a8e5d49ef9963be776c352fe3
+export ANTHROPIC_MODEL=deepseek-v4-pro
+export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4-pro
+export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4-pro
+export ANTHROPIC_DEFAULT_HAIKU_MODEL=deepseek-v4-flash
+export CLAUDE_CODE_SUBAGENT_MODEL=deepseek-v4-flash
+export CLAUDE_CODE_EFFORT_LEVEL=max
+
+# Aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Completion
+if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+fi
+
+# OpenClaw Completion
+if [ -f "$HOME/.openclaw/completions/openclaw.bash" ]; then
+    source "$HOME/.openclaw/completions/openclaw.bash"
+fi

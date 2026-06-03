@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpwxj7pc25qag"]
+
+[ext_resource type="Script" path="res://scenes/items/ExitZone.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6m8bf"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_79w0p"]
+size = Vector2(24, 24)
+
+[node name="ExitZone" type="Area2D"]
+script = ExtResource("1")
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6m8bf")
+position = Vector2(0, 0)
+
+[node name="Visual" type="ColorRect" parent="."]
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+color = Color(0.2, 0.8, 0.2, 0.15)
+
+[node name="Border" type="ColorRect" parent="Visual"]
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+color = Color(0, 0, 0, 0)
+show_behind_parent = true
+
+[node name="Arrow" type="ColorRect" parent="."]
+offset_left = -4.0
+offset_top = -28.0
+offset_right = 4.0
+offset_bottom = -16.0
+color = Color(0.2, 0.9, 0.2, 0.9)
+
+[node name="ArrowHead" type="ColorRect" parent="Arrow"]
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+color = Color(0.2, 0.9, 0.2, 0.9)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -40.0
+offset_right = 24.0
+offset_bottom = -20.0
+theme_override_colors/font_color = Color(0.2, 0.9, 0.2, 1)
+theme_override_font_sizes/font_size = 12
+text = "出口"
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -66,3 +66,11 @@ Thumbs.db
 .openclaw/
 .clawhub/
 .github/
+
+# Godot editor cache
+project-game/ZombieShelter/.godot/
+# build artifacts
+project-game/ZombieShelter/build/
+*.exe
+*.pck
+

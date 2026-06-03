@@ -1,0 +1,9 @@
+STATE: main_menu
+
+TEXT: Slay the Spire II, 存档1, 点击编辑, v0.103.3, 2026.05.29, 单人模式, 多人模式, 时间线, 设置, 百科大全, 退出, Unreadable text on scroll
+
+BUTTONS: 存档1 / 点击编辑 (top-left), 单人模式 (center-left), 多人模式 (center-left), 时间线 (center-left), 设置 (center-left), 百科大全 (center-left), 退出 (center-left), Scroll icon (top-right)
+
+WHAT TO CLICK: 单人模式
+
+BRIEF: The game's main menu is displayed, showing the title, version information, and primary navigation options.

@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4crl0ph2m0cf"]
+
+[ext_resource type="Script" path="res://scenes/main/Main.gd" id="1_e5xrt"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_e5xrt")
+
+[node name="Background" type="ColorRect" parent="."]
+mouse_filter = 2
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 1800.0
+offset_bottom = 1200.0
+color = Color(0.08, 0.08, 0.1, 1)
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="UICanvas"]
+offset_left = 340.0
+offset_top = 150.0
+offset_right = 940.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(0.8, 0.2, 0.15, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
+theme_override_font_sizes/font_size = 48
+text = "Zombie Shelter"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Subtitle" type="Label" parent="UICanvas"]
+offset_left = 380.0
+offset_top = 310.0
+offset_right = 900.0
+offset_bottom = 360.0
+theme_override_colors/font_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 18
+text = "丧尸末世 · 搜打撤生存"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="UICanvas"]
+offset_left = 440.0
+offset_top = 430.0
+offset_right = 840.0
+offset_bottom = 490.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_colors/font_pressed_color = Color(0.6, 0.6, 0.6, 1)
+theme_override_font_sizes/font_size = 24
+text = "开 始 游 戏"
+
+[node name="StartButtonBg" type="ColorRect" parent="UICanvas/StartButton"]
+mouse_filter = 2
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 404.0
+offset_bottom = 64.0
+color = Color(0.3, 0.3, 0.35, 1)
+
+[node name="ContinueButton" type="Button" parent="UICanvas"]
+offset_left = 440.0
+offset_top = 530.0
+offset_right = 840.0
+offset_bottom = 590.0
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+theme_override_colors/font_hover_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_colors/font_pressed_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "继 续  (暂不可用)"
+disabled = true
+
+[node name="ContinueButtonBg" type="ColorRect" parent="UICanvas/ContinueButton"]
+mouse_filter = 2
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 404.0
+offset_bottom = 64.0
+color = Color(0.2, 0.2, 0.22, 1)
+
+[node name="VersionLabel" type="Label" parent="UICanvas"]
+offset_left = 520.0
+offset_top = 700.0
+offset_right = 760.0
+offset_bottom = 740.0
+theme_override_colors/font_color = Color(0.3, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "MVP v0.1 | Godot 4.x"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="UICanvas/StartButton" to="." method="_on_start_pressed"]

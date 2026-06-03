@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3 uid="uid://bk2yfa7t6xhhf"]
+
+[ext_resource type="Script" path="res://scripts/scavenge/MapGenerator.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/scavenge/NoiseSystem.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/scavenge/ScavengingFSM.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/ui/ScavengeHUD.gd" id="4"]
+
+[node name="ScavengeMap" type="Node2D"]
+
+[node name="MapGenerator" type="Node2D" parent="."]
+script = ExtResource("1")
+
+[node name="NoiseSystem" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="ScavengingFSM" type="Node" parent="."]
+script = ExtResource("3")
+
+[node name="ScavengeHUD" type="CanvasLayer" parent="."]
+script = ExtResource("4")
+
+[node name="HealthBar" type="ProgressBar" parent="ScavengeHUD"]
+custom_minimum_size = Vector2(200, 20)
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 220.0
+offset_bottom = 40.0
+show_percentage = false
+
+[node name="HealthBarLabel" type="Label" parent="ScavengeHUD"]
+offset_left = 20.0
+offset_top = 4.0
+offset_right = 120.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0.8, 0.2, 0.2, 1)
+text = "HP"
+theme_override_font_sizes/font_size = 12
+
+[node name="StaminaBar" type="ProgressBar" parent="ScavengeHUD"]
+custom_minimum_size = Vector2(200, 16)
+offset_left = 20.0
+offset_top = 46.0
+offset_right = 220.0
+offset_bottom = 62.0
+show_percentage = false
+
+[node name="StaminaBarLabel" type="Label" parent="ScavengeHUD"]
+offset_left = 20.0
+offset_top = 64.0
+offset_right = 120.0
+offset_bottom = 80.0
+theme_override_colors/font_color = Color(0.2, 0.6, 0.9, 1)
+text = "STAMINA"
+theme_override_font_sizes/font_size = 10
+
+[node name="PhaseIndicator" type="Label" parent="ScavengeHUD"]
+offset_left = 560.0
+offset_top = 20.0
+offset_right = 720.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.3, 0.8, 0.3, 1)
+theme_override_font_sizes/font_size = 20
+text = "🔍 搜索"
+horizontal_alignment = 2
+
+[node name="InventoryLabel" type="Label" parent="ScavengeHUD"]
+offset_left = 460.0
+offset_top = 50.0
+offset_right = 760.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(0.8, 0.8, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "背包: 空"
+horizontal_alignment = 2
+
+[node name="ControlsHint" type="Label" parent="ScavengeHUD"]
+offset_left = 20.0
+offset_top = 700.0
+offset_right = 400.0
+offset_bottom = 724.0
+theme_override_colors/font_color = Color(0.5, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "移动: WASD | 奔跑: Shift | 蹲伏: Ctrl | F 交互 | 左键攻击"
+
+[node name="InteractHint" type="Label" parent="ScavengeHUD"]
+offset_left = 560.0
+offset_top = 700.0
+offset_right = 760.0
+offset_bottom = 724.0
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 14
+text = "[F] 搜索"
+horizontal_alignment = 2
+
+[node name="WithdrawProgress" type="ProgressBar" parent="ScavengeHUD"]
+visible = false
+offset_left = 280.0
+offset_top = 340.0
+offset_right = 480.0
+offset_bottom = 360.0
+show_percentage = false
+
+[node name="WithdrawLabel" type="Label" parent="ScavengeHUD"]
+visible = false
+offset_left = 280.0
+offset_top = 318.0
+offset_right = 480.0
+offset_bottom = 340.0
+theme_override_colors/font_color = Color(0.2, 0.6, 0.9, 1)
+text = "撤离中..."
+horizontal_alignment = 1
