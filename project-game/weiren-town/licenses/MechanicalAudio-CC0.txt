@@ -1,0 +1,1 @@
+Original mathematical synthesis generated for this project by tools/build_revolver_audio.py. No recordings, game audio, downloaded samples or third-party inputs. Dedicated to CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/

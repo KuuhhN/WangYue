@@ -1,25 +1,13 @@
-# Indie Game Project (WIP)
+# 游戏作品
 
-> **Status: Design phase · Engine: Godot 4.x · Goal: Complete & playable within a defined timeframe**
+## 《伪人小镇》
 
-This is my first indie game. I'm documenting every step — the ideas, the prototypes, the dead ends, and the breakthroughs.
+基于Godot4.6.3的小镇恐怖探索原型，结合资源搜集、实体车辆维修、角色互动与规则触发的怪物遭遇。
 
-## Vision
+[查看项目介绍](weiren-town/)。Windows Demo 0.1.0 RC1 已完成独立导出与运行验证，目前正在准备公开下载附件。
 
-A small, polished game with:
-- A simple but satisfying core loop
-- Comfortable, approachable visual style
-- Clear game feel (responsive controls, juicy feedback)
-- Complete from title screen to credits
+## 既有工程
 
-## Current Focus
+[ZombieShelter](ZombieShelter/) 为仓库中已有的Godot作品，保留其工程与历史记录，不与《伪人小镇》的正式场景或独立维修测试混合。
 
-- [ ] Define core mechanic & prototype
-- [ ] Choose art direction & color palette
-- [ ] Implement playable vertical slice
-- [ ] Playtest & iterate
-- [ ] Polish & release
-
-## Devlog
-
-See the [game devlog](../devlog/game/) for daily progress updates.
+[游戏开发记录](../devlog/game/)
