@@ -26,6 +26,8 @@
 
 ## 公开图册
 
+[开发作品集 PDF（16 页，轻量版）](portfolio/ImpostorTown_Portfolio_Public.pdf)
+
 [原生美术集 PDF](artbook/ImpostorTown_Artbook_Public.pdf)
 
 ## 授权
