@@ -24,6 +24,10 @@
 
 当前为开发中原型，完整剧情、玩法平衡与体验持续迭代。维修验证使用 Godot 输入及到达位置夹具加速，不等同于连续人工步行通关；声音试听、广泛硬件兼容及 OS 鼠标捕获等仍需进一步验收。
 
+## 公开图册
+
+[原生美术集 PDF](artbook/ImpostorTown_Artbook_Public.pdf)
+
 ## 授权
 
 自有代码采用 [MIT](LICENSE.code.txt)，自有美术和文本采用 [CC BY 4.0](LICENSE.assets.md)。适用范围见[项目许可声明](LICENSE.md)；字体、纸纹及已有单独授权的声音等继续遵守[第三方说明](THIRD_PARTY_NOTICES.md)。只公开已核实来源且有权再分发的内容。
